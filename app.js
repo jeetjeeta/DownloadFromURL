@@ -1,5 +1,6 @@
 const express=require('express')
 const cors=require('cors')
+const fs=require('fs')
 
 const app=express()
 app.use(cors({credentials: true}))
@@ -38,11 +39,61 @@ const mainDownload = (playListName, downURL, title, type) => {
   });
 };
 
+const upload = async (filePath) => {
+  const file = fs.readFileSync(filePath);
+  const filename0 = /\/(.+\.mp3)$/.exec(filePath)[1];
+
+  let serverData;
+  try {
+    const res = await fetch("https://api.gofile.io/getServer");
+    serverData = await res.json();
+    console.log(serverData);
+  } catch (err) {
+    console.log(err);
+  }
+
+  const { status, data } = serverData;
+
+  const uploadUrl = `https://${data.server}.gofile.io/uploadFile`;
+
+  const formData = new FormData();
+
+  formData.append("file", file, filename0);
+  formData.append("token", goFileToken);
+
+  let fileId, fileName, pageLink;
+  try {
+    const res2 = await fetch(uploadUrl, {
+      method: "POST",
+      body: formData,
+    });
+    const uploadedFileData = await res2.json();
+
+    fileId = uploadedFileData.data.fileId;
+    fileName = uploadedFileData.data.fileName;
+    pageLink = uploadedFileData.data.downloadPage;
+
+    console.log("uploadedFile Data: ", uploadedFileData);
+  } catch (err) {
+    console.log(err);
+  }
+
+  const goFileDownloadLink = `https://${"store"}.gofile.io/download/${fileId}/${encodeURIComponent(
+    fileName
+  )}`;
+
+  return { goFileDownloadLink, fileId, fileName, pageLink };
+};
+
 app.post('/download',async(req,res)=>{
 	const {url}=req.body
 	console.log('url: ',url)
 	try{
 		const obj=await mainDownload('',url,'file','video')
+		upload(obj.filePath)
+		.then(data=>{
+			console.log('d: ',data)
+		})
 
 	console.log('filepath: ',obj.filePath)
 

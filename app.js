@@ -90,10 +90,10 @@ app.post('/download',async(req,res)=>{
 	console.log('url: ',url)
 	try{
 		const obj=await mainDownload('',url,'file','video')
-		upload(obj.filePath)
-		.then(data=>{
+		const data=await upload(obj.filePath)
+		
 			console.log('d: ',data)
-		})
+		
 
 	console.log('filepath: ',obj.filePath)
 

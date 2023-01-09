@@ -1,6 +1,9 @@
 const express=require('express')
+const cors=require('cors')
 
 const app=express()
+app.use(cors({credentials: true}))
+app.use(express.json())
 
 const Downloader = require("nodejs-file-downloader");
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
@@ -35,8 +38,8 @@ const mainDownload = (playListName, downURL, title, type) => {
   });
 };
 
-app.get('/download/:url',async(req,res)=>{
-	const {url}=req.params
+app.post('/download',async(req,res)=>{
+	const {url}=req.body
 	console.log('url: ',url)
 	try{
 		const obj=await mainDownload('',url,'file','video')

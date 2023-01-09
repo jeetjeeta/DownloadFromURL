@@ -37,10 +37,20 @@ const mainDownload = (playListName, downURL, title, type) => {
 
 app.get('/download/:url',async(req,res)=>{
 	const {url}=req.params
-	const obj=await mainDownload('',url,'file','video')
+	console.log('url: ',url)
+	try{
+		const obj=await mainDownload('',url,'file','video')
+
 	console.log('filepath: ',obj.filePath)
 
-	res.json('ok')
+	res.json('ok')	
+	}
+
+	catch(err){
+		console.log('err: ',err)
+		res.status(401).json(err)
+	}
+	
 })
 
 const PORT=process.env.PORT||8080

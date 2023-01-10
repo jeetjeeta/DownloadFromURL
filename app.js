@@ -107,6 +107,11 @@ app.post('/download',async(req,res)=>{
 	
 })
 
+app.get('/',(req,res)=>{
+  console.log('host accessed')
+  res.json('working')
+})
+
 const PORT=process.env.PORT||8080
 
 app.listen(PORT,()=>{

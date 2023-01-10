@@ -43,6 +43,9 @@ const upload = async (filePath) => {
   const file = fs.readFileSync(filePath);
   const filename0 = /\/(.+\.mp4)$/.exec(filePath)[1];
 
+  console.log('filepath: ',filePath)
+  console.log('file: ',file)
+
   let serverData;
   try {
     const res = await fetch("https://api.gofile.io/getServer");

@@ -41,7 +41,7 @@ const mainDownload = (playListName, downURL, title, type) => {
 
 const upload = async (filePath) => {
   const file = fs.readFileSync(filePath);
-  const filename0 = /\/(.+\.mp3)$/.exec(filePath)[1];
+  const filename0 = /\/(.+\.mp4)$/.exec(filePath)[1];
 
   let serverData;
   try {

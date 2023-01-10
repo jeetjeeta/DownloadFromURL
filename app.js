@@ -95,7 +95,7 @@ app.post('/download',async(req,res)=>{
 	try{
 		const obj=await mainDownload('',url,'file2','video')
 		// const data=await upload(obj.filePath)
-    const file = fs.readFileSync(filePath);
+    // const file = fs.readFileSync(filePath);
 
 		
 			console.log('d: ',data)

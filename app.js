@@ -45,6 +45,7 @@ const upload = async (filePath) => {
 
   console.log('filepath: ',filePath)
   console.log('file: ',file)
+  console.log('fileSize: ',file.byteLength)
 
   let serverData;
   try {
@@ -92,7 +93,7 @@ app.post('/download',async(req,res)=>{
 	const {url}=req.body
 	console.log('url: ',url)
 	try{
-		const obj=await mainDownload('',url,'file','video')
+		const obj=await mainDownload('',url,'file2','video')
 		const data=await upload(obj.filePath)
 		
 			console.log('d: ',data)

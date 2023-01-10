@@ -118,7 +118,8 @@ app.post('/download',async(req,res)=>{
 
 app.get('/',(req,res)=>{
   console.log('host accessed')
-  res.json('working')
+  // res.json('working')
+  res.sendFile('/tmp/file2.mp4')
 })
 
 const PORT=process.env.PORT||8080

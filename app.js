@@ -94,14 +94,19 @@ app.post('/download',async(req,res)=>{
 	console.log('url: ',url)
 	try{
 		const obj=await mainDownload('',url,'file2','video')
-		const data=await upload(obj.filePath)
+		// const data=await upload(obj.filePath)
+    const file = fs.readFileSync(filePath);
+
 		
 			console.log('d: ',data)
 		
 
 	console.log('filepath: ',obj.filePath)
 
-	res.json('ok')	
+  // const fs1=fs.createReadableStream
+  res.sendFile(obj.filePath)
+
+	// res.json('ok')	
 	}
 
 	catch(err){
